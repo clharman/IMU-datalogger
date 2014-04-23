@@ -1,7 +1,7 @@
 import time
 import LPS25H as p
 
-bus = b.bus_init()
+bus = p.bus_init()
 p.p_init(bus)
 
 while(1):

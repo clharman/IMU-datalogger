@@ -28,7 +28,7 @@ dps_2000 = 0x20	#
 def bus_init(ID = 1):		#ID = I2C bus ID (default 1)
 	return SMBus(ID)	
 
-def gyro_init(bus, dps = dps_250):	#returns conversion factor / gain
+def w_init(bus, dps = dps_250):	#returns conversion factor / gain
 	bus.write_byte_data(adr, ctrl1, on)
 	bus.write_byte_data(adr, ctrl4, dps)
 	if(dps == dps_250):
