@@ -6,6 +6,6 @@ gain = g.gyro_init(bus)
 
 while(1):
 	rates = g.get_gyro(bus, gain)
-	print rates[1] + '\t' + rates[2] + '\t' + rates[3]
+	print str(rates[0]-4.2) +'\t'+ '\t' + str(rates[1]-1.3) +'\t'+ '\t' + str(rates[2]-1.3)
 	time.sleep(0.1)
 
