@@ -1,4 +1,4 @@
-#addresses and commands for LSP25H barometer/altitude sensor
+#addresses and commands for LPS25H barometer/altitude sensor
 #for more information see datasheet at http://www.pololu.com/file/download/LPS25H.pdf?file_id=0J761
 from smbus import SMBus
 
@@ -27,7 +27,7 @@ on = 0xA0		#7hz updates
 reset = 0x00	#reset ctrl2, ctrl3
 
 pgain = 1.0 / 4096.0
-tgain = 1.0 / 480
+tgain = 1.0 / 480.0
 
 #setup functions
 def bus_init(ID = 1):		#ID = I2C bus ID (default 1)
@@ -42,7 +42,7 @@ def get_alt_raw(bus):		#returns raw values of [pxl, plo, phi, tlo, thi]
 	raws = [bus.read_byte_data(adr,pxl), bus.read_byte_data(adr,plo), bus.read_byte_data(adr,phi), bus.read_byte_data(adr,tlo), bus.read_byte_data(adr,thi)]
 	return raws
 
-def get_alt(bus, gain):	#returns [press, temp] (hPa, dec C)
+def get_alt(bus):	#returns [press, temp] (hPa, dec C)
 	press = 65536 * bus.read_byte_data(adr, phi) + 256 * bus.read_byte_data(adr, plo) + bus.read_byte_data(adr, pxl)
 	temp = 256 * bus.read_byte_data(adr,thi) + bus.read_byte_data(adr,tlo)
 
