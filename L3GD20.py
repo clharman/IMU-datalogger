@@ -2,8 +2,6 @@
 #for more information see datasheet at http://www.pololu.com/file/download/L3GD20.pdf?file_id=0J563
 from smbus import SMBus
 
-
-
 #registers, addresses
 adr = 0x6B		#I2C address of L3GD20
 who = 0x0F		#who_am_I -- 11010100 -- D4
