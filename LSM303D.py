@@ -47,6 +47,7 @@ m_FS_4g = 0x20	#
 m_FS_8g = 0x40	#
 m_FS_12g = 0x60	#
 
+
 #setup functions
 def bus_init(ID = 1):		#ID = I2C bus ID (default 1)
 	return SMBus(ID)	
@@ -82,7 +83,7 @@ def m_init(bus, m_FS = m_FS_4g):	#returns conversion factor = gain (output will 
 
 #read functions
 
-def get_a(bus, a_gain):	#returns [a_x, a_y, a_z] (mg)
+def a_get(bus, a_gain):	#returns [a_x, a_y, a_z] (mg)
 	a_x = 256 * bus.read_byte_data(adr,a_xhi) + bus.read_byte_data(adr,a_xlo)
 	if(a_x >= 32768): a_x = a_x - 65536
 
@@ -98,15 +99,15 @@ def get_a(bus, a_gain):	#returns [a_x, a_y, a_z] (mg)
 	
 	return [a_x, a_y, a_z]
 
-def get_m(bus, m_gain):	#returns [m_x, m_y, m_z] (mgauss)
+def m_get(bus, m_gain):	#returns [m_x, m_y, m_z] (mgauss)
 	m_x = 256 * bus.read_byte_data(adr,m_xhi) + bus.read_byte_data(adr,m_xlo)
-	if(m_x >= 65536): m_x = m_x - 131072
+	if(m_x >= 32768): m_x = m_x - 65536
 
 	m_y = 256 * bus.read_byte_data(adr,m_yhi) + bus.read_byte_data(adr,m_ylo)
-	if(m_y >= 65536): m_y = m_y - 131072
+	if(m_y >= 32768): m_y = m_y - 65536
 
 	m_z = 256 * bus.read_byte_data(adr,m_zhi) + bus.read_byte_data(adr,m_zlo)
-	if(m_z >= 65536): m_z = m_z - 131072
+	if(m_z >= 32768): m_z = m_z - 65536
 
 	m_x = m_gain * m_x
 	m_y = m_gain * m_y

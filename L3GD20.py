@@ -40,27 +40,23 @@ def gyro_init(bus, dps = dps_250):	#returns conversion factor / gain
 	return gain
 
 #read functions
-def get_gyro_raw(bus):		#returns raw values of [xlo, xhi, ylo, yhi, zlo, zhi]
-	raws = [bus.read_byte_data(adr,xlo), bus.read_byte_data(adr,xhi), bus.read_byte_data(adr,ylo), bus.read_byte_data(adr,yhi), bus.read_byte_data(adr,zlo), bus.read_byte_data(adr,zhi)]
-	return raws
+def w_get(bus, gain):	#returns [w_x, w_y, w_z] (degrees/s)
+	w_x = 256 * bus.read_byte_data(adr,xhi) + bus.read_byte_data(adr,xlo)
+	if(w_x >= 37268): w_x = w_x - 65536
 
-def get_gyro(bus, gain):	#returns [wx, wy, wz] (degrees/s)
-	wx = 256 * bus.read_byte_data(adr,xhi) + bus.read_byte_data(adr,xlo)
-	if(wx >= 37268): wx = wx - 74536
+	w_y = 256 * bus.read_byte_data(adr,yhi) + bus.read_byte_data(adr,ylo)
+	if(w_y >= 37268): w_y = w_y - 65536
 
-	wy = 256 * bus.read_byte_data(adr,yhi) + bus.read_byte_data(adr,ylo)
-	if(wy >= 37268): wy = wy - 74536
+	w_z = 256 * bus.read_byte_data(adr,yhi) + bus.read_byte_data(adr,ylo)
+	if(w_z >= 37268): w_z = w_z - 65536
 
-	wz = 256 * bus.read_byte_data(adr,yhi) + bus.read_byte_data(adr,ylo)
-	if(wz >= 37268): wz = wz - 74536
+	w_x0 = 0 	#zero-level rates for later use in algorithms
+	w_y0 = 0
+	w_z0 = 0
 
-	wx0 = 0 	#zero-level rates for later use in algorithms
-	wy0 = 0
-	wz0 = 0
-
-	wx = gain * (wx - wx0)
-	wy = gain * (wy - wy0)
-	wz = gain * (wz - wz0)
+	w_x = gain * (w_x - w_x0)
+	w_y = gain * (w_y - w_y0)
+	w_z = gain * (w_z - w_z0)
 	
-	return [wx, wy, wz]
+	return [w_x, w_y, w_z]
 
