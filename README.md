@@ -10,7 +10,7 @@ I plan to compare the quality of this <$100 system to that of professional syste
 As my first Beaglebone project and first tech project in a while, it also serves as a useful exercise to learn the workings of Linux, remote development, I2C communication, and basic filtering.
 
 --What is the current status?--
-The code is currently being developed in Python but once a working version is reached development will be switched to C++.  So far there is functionality to read the output from the angular rate sensor, pressure sensor, and accelerometer.
+The code is currently being developed in Python but once a working version is reached development will be switched to C++.  So far there is functionality to read the output from the angular rate sensor.
 
 --What is planned?--
 Implement recording and basic software filtering of 3 axes of acceleration and angular rate.  As goals are reached more will be added.
